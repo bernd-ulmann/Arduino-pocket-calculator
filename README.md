@@ -54,3 +54,73 @@ element from the top of the stack:
 |0..9|Enter digit||
 |.   |Decimal point||
 |+-  |Change sign of number being entered||
+
+Thus, to convert the rectangular vector (1, 1) into polar form, the following
+sequence of key presses is required:
+```
+1 PUSH PUSH INV P/R
+```
+
+## Source code
+The source for this little project can be found in
+[calculator.ino](calculator.ino). It should be easy to modify and adapt it
+for different displays or input devices. The structure of the code is pretty
+straightforward (and yes, I know that the code would not win any beauty 
+contest - it is the result of about half a day of tinkering :-) ).
+
+The program requires the libraries
+```
+TouchScreen
+LCDWIKI_GUI
+LCDWIKI_KBV
+```
+to be installed before compiling.
+
+The keyboard is defined in a single list of strings:
+```
+String keys[] = {"0", ".", "+-", "PUSH",
+                 "1", "2", "3", "+ -",
+                 "4", "5", "6", "* /",
+                 "7", "8", "9", "1/X",
+                 "STO", "X/Y", "LOG", "LN",
+                 "SIN", "COS", "TAN", "P/R",
+                 "PI/E", "I/FP", "SQRT", "DEL",
+                 "RAD", "FIX", "CLR", "INV"
+                };
+```
+
+The width and height of the keyboard is defined by KBD_X and KBD_Y. The
+x/y-coordinate tupel returned from the touch screen is mapped to its 
+corresponding key which is then identified by the string contained in the 
+above data structure.
+
+The actual functions are implemented in the central loop()-routine:
+```
+if (key_pressed == "RAD") {
+    ...
+}
+else if (key_pressed == "FIX") {
+    ...
+}
+...
+```
+
+Number entry is done by a simple state machine using a global state variable
+to remember if a number is entered at all and if digits belong to the integer
+or fraction part of the number.
+
+A (nasty) feature of these TFT displays is that a pixel set has to be cleared
+explicitly, so it is necessary to clear the areas in which the status line,
+the stack contents (of which only STACK_LINES entries are shown at once), and
+the number entry field whenever one of these fields is to be updated.
+
+In the case of the status display this clear operation is done by plotting a
+black box over the status line before refreshing it. The number entry routine
+remembers the number and reprints it in black when it is to be erased by 
+pressing DEL.
+
+The code is pretty rudimentary and does not take care of overflows which can 
+occur in divisions or tan(...) etc. It serves as a little demonstration 
+program to help in dealing with such TFT touch displays.
+
+Have fun. :-)

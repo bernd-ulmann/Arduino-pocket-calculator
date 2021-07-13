@@ -72,7 +72,6 @@ String keys[] = {"0", ".", "+-", "PUSH",
                 };
 
 bool rad = TRUE,    // Radians if TRUE, otherwise degrees
-     norm = TRUE,   // Normal value display, fixed format if FALSE
      inv  = FALSE,  // Inverse flag, true if INV was pressed in the preceeding step
      error = FALSE; // Global error flag
 
@@ -98,7 +97,7 @@ void display_status(String key) {
 
   disp.Set_Draw_color(BLACK);
   disp.Fill_Rectangle(0, 0, disp.Get_Display_Width(), 10);
-  sprintf(mode, "% 4s % 5s SP=%03d F=%02d %s", rad ? "RAD  " : "DEG  ", norm ? "NORM  " : "FIX", sp, fix, inv ? "I" : " ");
+  sprintf(mode, "% 4s SP=%03d F=%02d %s", rad ? "RAD  " : "DEG  ", sp, fix, inv ? "I" : " ");
   display_string(mode, 0, 0, 1, YELLOW, 1);
 
   if (error)

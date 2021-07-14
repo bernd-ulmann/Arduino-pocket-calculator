@@ -74,7 +74,8 @@ TouchScreen
 LCDWIKI_GUI
 LCDWIKI_KBV
 ```
-to be installed before compiling.
+to be installed before compiling. These can be downloaded 
+[here](http://www.lcdwiki.com/3.5inch_Arduino_Display-UNO).
 
 The keyboard is defined in a single list of strings:
 ```
